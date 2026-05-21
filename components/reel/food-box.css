@@ -1,0 +1,552 @@
+@keyframes box-lid-swing {
+  from {
+    transform: rotateX(0deg);
+  }
+  to {
+    transform: rotateX(-118deg);
+  }
+}
+
+@keyframes qr-video-shimmer {
+  0% {
+    opacity: 0.12;
+    transform: translateX(-18%) skewX(-8deg);
+  }
+  50% {
+    opacity: 0.42;
+    transform: translateX(18%) skewX(-8deg);
+  }
+  100% {
+    opacity: 0.12;
+    transform: translateX(-18%) skewX(-8deg);
+  }
+}
+
+.food-box-stage {
+  --box-size: 210px;
+  --box-half: calc(var(--box-size) / 2);
+  /* Cool delivery grey — corrugated insulation / polymer shell */
+  --grey-shell-top: #b8bdc6;
+  --grey-shell-mid: #8b929e;
+  --grey-shell-deep: #5c6370;
+  --grey-edge: #2f343d;
+  --tape: rgba(215, 220, 228, 0.82);
+  /* Thin lip between corrugated shell and active display */
+  --screen-bezel: 6px;
+  /* Moulded grey frame around the LCD (matches delivery shell) */
+  --bezel-highlight: #d8dde5;
+  --bezel-face: #b8bec9;
+  --bezel-shadow: #8f97a5;
+  --bezel-edge: #6b7280;
+
+  position: relative;
+  width: var(--box-size);
+  height: calc(var(--box-size) + 72px);
+  margin: 0 auto;
+  perspective: 900px;
+  perspective-origin: 50% 38%;
+  overflow: visible;
+}
+
+.food-box-shadow {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  width: 82%;
+  height: 22px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.62), transparent 74%);
+  filter: blur(8px);
+}
+
+/* Strap loop — matte grey nylon */
+.food-box-handle {
+  position: absolute;
+  left: 50%;
+  top: -20px;
+  z-index: 24;
+  width: 46%;
+  height: 30px;
+  transform: translateX(-50%);
+  border: 5px solid color-mix(in srgb, var(--grey-edge) 88%, #000);
+  border-bottom: none;
+  border-radius: 999px 999px 0 0;
+  box-sizing: border-box;
+  opacity: 0.92;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 50%);
+}
+
+.food-box-assembly {
+  position: relative;
+  width: var(--box-size);
+  height: var(--box-size);
+  margin: 40px auto 0;
+  perspective: 720px;
+  perspective-origin: 50% 35%;
+  transform-style: preserve-3d;
+  overflow: visible;
+}
+
+/* Square-on when stopped — no tilt / off-center perspective with QR visible */
+.food-box-stage.is-stopped {
+  perspective-origin: 50% 50%;
+}
+
+.food-box-stage.is-stopped .food-box-assembly {
+  perspective-origin: 50% 50%;
+}
+
+.food-box-cube {
+  position: relative;
+  width: var(--box-size);
+  height: var(--box-size);
+  transform-style: preserve-3d;
+  overflow: visible;
+}
+
+.cube-face {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--box-size);
+  height: var(--box-size);
+  padding: 11px;
+  box-sizing: border-box;
+  backface-visibility: hidden;
+  border-radius: 5px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  background-color: var(--grey-shell-mid);
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 2px,
+      rgba(0, 0, 0, 0.07) 2px,
+      rgba(0, 0, 0, 0.07) 3px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.06) 0 1px,
+      transparent 1px 6px
+    ),
+    linear-gradient(168deg, var(--grey-shell-top) 0%, var(--grey-shell-mid) 48%, var(--grey-shell-deep) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    inset 0 -14px 26px rgba(20, 24, 30, 0.22),
+    0 0 0 1px rgba(15, 18, 24, 0.55);
+}
+
+.cube-face-front {
+  transform: rotateY(0deg) translateZ(var(--box-half));
+}
+
+.cube-face-back {
+  transform: rotateY(180deg) translateZ(var(--box-half));
+}
+
+.cube-face-right {
+  transform: rotateY(90deg) translateZ(var(--box-half));
+}
+
+.cube-face-left {
+  transform: rotateY(-90deg) translateZ(var(--box-half));
+}
+
+/* Mounted LED faces: signage fills the shell opening edge-to-edge */
+.cube-face.cube-face-display {
+  padding: 0;
+  justify-content: stretch;
+  align-items: stretch;
+}
+
+.cube-face-top {
+  transform: rotateX(90deg) translateZ(var(--box-half));
+  padding: 0;
+}
+
+.cube-face-top-closed {
+  display: block;
+  background-color: var(--grey-shell-top);
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 2px,
+      rgba(0, 0, 0, 0.06) 2px,
+      rgba(0, 0, 0, 0.06) 3px
+    ),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.22), transparent 42%),
+    linear-gradient(168deg, #c5cad2, var(--grey-shell-mid) 58%, var(--grey-shell-deep));
+  box-shadow:
+    inset 0 -10px 18px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.cube-top-vents {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 22% 38%, rgba(0, 0, 0, 0.28) 0, rgba(0, 0, 0, 0.28) 4px, transparent 4.5px),
+    radial-gradient(circle at 40% 38%, rgba(0, 0, 0, 0.28) 0, rgba(0, 0, 0, 0.28) 4px, transparent 4.5px),
+    radial-gradient(circle at 58% 38%, rgba(0, 0, 0, 0.28) 0, rgba(0, 0, 0, 0.28) 4px, transparent 4.5px),
+    radial-gradient(circle at 76% 38%, rgba(0, 0, 0, 0.28) 0, rgba(0, 0, 0, 0.28) 4px, transparent 4.5px),
+    linear-gradient(90deg, transparent 8%, var(--tape) 8%, var(--tape) 24%, transparent 24%),
+    linear-gradient(transparent 62%, rgba(35, 40, 48, 0.2) 62%, rgba(35, 40, 48, 0.2) 66%, transparent 66%);
+  opacity: 0.96;
+}
+
+.cube-face-bottom {
+  transform: rotateX(-90deg) translateZ(var(--box-half));
+  padding: 0;
+  display: block;
+  background-color: #1e2228;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 2px,
+      rgba(255, 255, 255, 0.035) 2px,
+      rgba(255, 255, 255, 0.035) 3px
+    ),
+    linear-gradient(168deg, #2e343e, #12151a 88%);
+  box-shadow: inset 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+.cube-face-top-closed.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Hinged flap on geometric cube top — shares preserve-3d with cube faces */
+.box-lid-anchor {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  pointer-events: none;
+  z-index: 40;
+}
+
+.food-box-stage:not(.is-lid-open) .box-lid-anchor {
+  visibility: hidden;
+}
+
+.food-box-stage.is-lid-open .box-lid-anchor {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.box-lid-anchor-inner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--box-size);
+  height: var(--box-size);
+  transform-style: preserve-3d;
+  transform: rotateX(90deg) translateZ(calc(var(--box-half) + 2px));
+}
+
+.box-lid-flap {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 68px;
+  bottom: 0;
+  transform-style: preserve-3d;
+  transform-origin: 50% 100%;
+  backface-visibility: hidden;
+  transform: rotateX(0deg);
+}
+
+/* Swing open once rotation has stopped (class toggled after cube settle) */
+.food-box-stage.is-flap-open .box-lid-flap {
+  animation: box-lid-swing 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.food-box-stage.is-lid-open:not(.is-flap-open) .box-lid-inner {
+  visibility: hidden;
+}
+
+/* Inner lid: control strip like a routed player UI */
+.box-lid-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 12px;
+  box-sizing: border-box;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, transparent 35%),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.12) 0 1px, transparent 1px 5px),
+    linear-gradient(185deg, #2a3038 0%, #161a20 100%);
+  color: #e4e9f0;
+  text-align: center;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: 5px 5px 4px 4px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 5px 0 #0c0e12,
+    0 12px 26px rgba(0, 0, 0, 0.45);
+}
+
+.food-box-stage.is-lid-open .box-lid-flap {
+  pointer-events: auto;
+}
+
+.food-box-stage.is-lid-open:not(.is-flap-open) .cube-face-top-closed {
+  opacity: 1;
+}
+
+.food-box-stage.is-flap-open .cube-face-top-closed {
+  opacity: 0;
+}
+
+.box-lid-kicker {
+  font-size: 0.58rem;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: rgba(220, 228, 238, 0.88);
+}
+
+.box-lid-countdown {
+  font-size: 1.85rem;
+  font-weight: 950;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: #f8fafc;
+  text-shadow: 0 0 18px rgba(180, 200, 220, 0.45);
+}
+
+.box-lid-offer {
+  font-size: 0.8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: rgba(200, 210, 222, 0.95);
+}
+
+/*
+ * Outer .qr-image-face = grey injection-moulded bezel (street signage housing).
+ * Inner .qr-screen-inner = nearly full-area LCD stack playing the ad “video”.
+ */
+.qr-image-face {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  align-self: stretch;
+  width: 100%;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: visible;
+  border-radius: 4px;
+  background: linear-gradient(
+    165deg,
+    var(--bezel-highlight) 0%,
+    var(--bezel-face) 38%,
+    var(--bezel-shadow) 72%,
+    color-mix(in srgb, var(--bezel-edge) 85%, #2a2f38) 100%
+  );
+  box-shadow:
+    inset 0 2px 2px rgba(255, 255, 255, 0.35),
+    inset 0 -5px 10px rgba(20, 24, 32, 0.12),
+    0 1px 0 rgba(255, 255, 255, 0.12),
+    0 10px 22px rgba(0, 0, 0, 0.28);
+}
+
+/* Corner bezels / faux mounting cups */
+.qr-image-face::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  border-radius: 4px;
+  opacity: 0.7;
+  background:
+    radial-gradient(circle at 11px 11px, #c5cad3 0 2px, #7a8391 2.5px 3px, transparent 4px),
+    radial-gradient(circle at calc(100% - 11px) 11px, #c5cad3 0 2px, #7a8391 2.5px 3px, transparent 4px),
+    radial-gradient(circle at 11px calc(100% - 11px), #c5cad3 0 2px, #7a8391 2.5px 3px, transparent 4px),
+    radial-gradient(
+      circle at calc(100% - 11px) calc(100% - 11px),
+      #c5cad3 0 2px,
+      #7a8391 2.5px 3px,
+      transparent 4px
+    );
+}
+
+.qr-screen-inner {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  align-self: stretch;
+  width: auto;
+  margin: var(--screen-bezel);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(2px, 1.2vw, 5px);
+  padding: clamp(4px, 1.6vw, 8px);
+  box-sizing: border-box;
+  text-align: center;
+  overflow: hidden;
+  color: var(--offer-color);
+  border-radius: 2px;
+  background:
+    radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--offer-color) 34%, transparent), transparent 46%),
+    linear-gradient(152deg, var(--offer-accent), #050505 72%);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.58),
+    inset 0 3px 22px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 1px 0 rgba(45, 52, 62, 0.35);
+}
+
+.qr-screen-inner::after {
+  content: '';
+  position: absolute;
+  inset: -45% -35%;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 34%,
+    rgba(255, 255, 255, 0.14) 47%,
+    rgba(255, 255, 255, 0.34) 50%,
+    rgba(255, 255, 255, 0.12) 53%,
+    transparent 66%
+  );
+  animation: qr-video-shimmer 2.8s ease-in-out infinite;
+  mix-blend-mode: soft-light;
+}
+
+.qr-video-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  border-radius: 2px;
+  background:
+    linear-gradient(185deg, rgba(255, 255, 255, 0.14) 0%, transparent 42%),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 2px,
+      rgba(0, 0, 0, 0.09) 2px,
+      rgba(0, 0, 0, 0.09) 3px
+    );
+  opacity: 0.48;
+  mix-blend-mode: multiply;
+}
+
+.qr-screen-inner > strong {
+  position: relative;
+  z-index: 4;
+  max-width: 100%;
+  font-size: clamp(1.05rem, 5.6vw, 1.72rem);
+  line-height: 0.96;
+  font-weight: 950;
+  color: #fff;
+  text-wrap: balance;
+}
+
+.qr-screen-inner > span:not(.qr-video-overlay) {
+  position: relative;
+  z-index: 4;
+  max-width: 100%;
+  font-size: clamp(0.62rem, 3.2vw, 0.76rem);
+  line-height: 1.08;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.qr-screen-inner > small {
+  position: relative;
+  z-index: 4;
+  display: inline-flex;
+  padding: 3px 7px;
+  border-radius: 4px;
+  background: var(--offer-color);
+  color: #050505;
+  font-size: clamp(0.56rem, 2.9vw, 0.64rem);
+  font-weight: 950;
+}
+
+.offer-kicker {
+  position: relative;
+  z-index: 4;
+  font-size: clamp(0.44rem, 2.4vw, 0.52rem);
+  letter-spacing: 0.16em;
+  opacity: 0.93;
+}
+
+.offer-qr-wrap {
+  position: relative;
+  z-index: 4;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+  border-radius: 3px;
+  background: #fff;
+  line-height: 0;
+  box-shadow:
+    0 1px 4px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+/* Keep QR square inside the face so the panel doesn’t look warped */
+.food-box-stage.is-stopped .offer-qr-wrap svg {
+  display: block;
+  width: clamp(72px, 38%, 88px);
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.qr-image-face-winner {
+  box-shadow:
+    inset 0 2px 2px rgba(255, 255, 255, 0.28),
+    inset 0 -5px 10px rgba(20, 24, 32, 0.14),
+    0 0 0 2px color-mix(in srgb, var(--bezel-highlight) 65%, transparent),
+    0 0 36px color-mix(in srgb, var(--offer-color) 58%, transparent),
+    0 10px 22px rgba(0, 0, 0, 0.28);
+}
+
+.qr-image-face-winner .qr-screen-inner {
+  box-shadow:
+    inset 0 0 0 2px color-mix(in srgb, var(--bezel-highlight) 55%, transparent),
+    inset 0 3px 22px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 28px color-mix(in srgb, var(--offer-color) 55%, transparent);
+}
+
+.food-box-stage.is-lid-open {
+  filter: drop-shadow(0 0 28px rgba(160, 176, 192, 0.38));
+}
+
+.is-spinning .cube-face:not(.cube-face-bottom):not(.cube-face-top) {
+  filter: blur(0.35px);
+}
+
+.is-spinning .qr-screen-inner > strong {
+  font-size: clamp(1rem, 5vw, 1.52rem);
+}
+
+@media (max-width: 420px) {
+  .food-box-stage {
+    --box-size: 195px;
+    --screen-bezel: 5px;
+  }
+}

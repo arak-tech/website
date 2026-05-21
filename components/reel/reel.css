@@ -1,0 +1,364 @@
+@keyframes courier-rush {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-44px, 0, 0);
+  }
+}
+
+@keyframes courier-glow {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.reel-app {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  background: #08090b;
+}
+
+.reel-viewport {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+}
+
+.reel-frame {
+  position: relative;
+  width: min(100vw - 24px, 430px);
+  aspect-ratio: 9 / 16;
+  overflow: visible;
+  border-radius: 20px;
+  background: #060708;
+}
+
+.reel-scene-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.reel-scene {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.reel-start-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+.entry-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+.entry-modal {
+  width: min(100%, 360px);
+  display: grid;
+  gap: 12px;
+  padding: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background: #111418;
+  color: #f8fafc;
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.55);
+}
+
+.entry-modal-header {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+
+.entry-modal-header p,
+.entry-modal-header h2 {
+  margin: 0;
+}
+
+.entry-modal-header p {
+  color: rgba(226, 232, 240, 0.66);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.entry-modal-header h2 {
+  font-size: 1.35rem;
+  font-weight: 950;
+}
+
+.entry-field {
+  display: grid;
+  gap: 6px;
+  color: rgba(226, 232, 240, 0.86);
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.entry-field input,
+.entry-field select {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid rgba(148, 163, 184, 0.34);
+  border-radius: 8px;
+  background: #080a0d;
+  color: #f8fafc;
+  font: inherit;
+  outline: none;
+  padding: 0 12px;
+}
+
+.entry-field input:focus,
+.entry-field select:focus {
+  border-color: #ffe566;
+  box-shadow: 0 0 0 3px rgba(255, 229, 102, 0.16);
+}
+
+.entry-submit-btn {
+  min-height: 46px;
+  margin-top: 4px;
+  border: 0;
+  border-radius: 8px;
+  background: #ffe566;
+  color: #0a0a0a;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.entry-submit-btn:active {
+  transform: translateY(1px);
+}
+
+.reel-replay-btn {
+  padding: 8px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.reel-replay-btn:hover {
+  border-color: rgba(200, 210, 222, 0.7);
+  color: #e2e8f0;
+}
+
+.spin-btn {
+  min-width: 200px;
+  padding: 18px 28px;
+  border: 0;
+  border-radius: 12px;
+  background: #ffe566;
+  color: #0a0a0a;
+  font-size: 1.15rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  cursor: default;
+  box-shadow:
+    0 6px 0 #c9a800,
+    0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.intro-scene,
+.brand-scene {
+  background: #0a0a0a;
+}
+
+/* Courier context: muted road / dusk motion — no vehicle, just speed and city haze */
+.box-scene.box-scene--courier {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(ellipse 110% 65% at 50% 92%, rgba(58, 64, 72, 0.5), transparent 58%),
+    radial-gradient(ellipse 90% 55% at 50% 28%, rgba(100, 112, 128, 0.12), transparent 55%),
+    linear-gradient(185deg, #12151a 0%, #0a0c0f 42%, #050607 100%);
+  overflow: hidden;
+}
+
+.box-scene.box-scene--courier::before {
+  content: '';
+  position: absolute;
+  inset: -35% -5%;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    -7deg,
+    transparent 0,
+    transparent 32px,
+    rgba(240, 244, 250, 0.045) 32px,
+    rgba(240, 244, 250, 0.045) 33px
+  );
+  animation: courier-rush 0.92s linear infinite;
+  opacity: 0.48;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 28%, #000 78%, transparent 100%);
+}
+
+.box-scene.box-scene--courier::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 70% 45% at 50% 38%, rgba(180, 195, 210, 0.07), transparent 62%);
+  animation: courier-glow 5s ease-in-out infinite;
+}
+
+.box-scene.box-scene--courier.box-scene--rush::before {
+  animation-duration: 0.5s;
+  opacity: 0.58;
+}
+
+.box-scene {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.congrats-banner {
+  position: absolute;
+  top: 14%;
+  margin: 0;
+  font-size: 1.65rem;
+  font-weight: 950;
+  color: #e8edf3;
+  text-shadow:
+    0 2px 0 #000,
+    0 0 26px rgba(160, 175, 190, 0.45);
+  z-index: 2;
+}
+
+.win-offer-label {
+  position: absolute;
+  bottom: 22%;
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: rgba(210, 218, 228, 0.88);
+  z-index: 2;
+}
+
+.win-offer-label strong {
+  color: #cbd5e1;
+}
+
+.claim-offer-btn {
+  position: absolute;
+  bottom: 8%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #e5e7eb, #9ca3af);
+  color: #0f1419;
+  font-size: 0.95rem;
+  font-weight: 950;
+  text-decoration: none;
+  text-transform: uppercase;
+  z-index: 3;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 6px 0 #4b5563,
+    0 16px 30px rgba(0, 0, 0, 0.48);
+}
+
+.claim-offer-btn:active {
+  transform: translateY(3px);
+  box-shadow:
+    0 3px 0 #4b5563,
+    0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Brand CTA under the open box — lid stays visible until the loop restarts */
+.brand-over-box {
+  position: absolute;
+  bottom: max(10%, env(safe-area-inset-bottom, 0px));
+  left: 14px;
+  right: 14px;
+  max-width: 380px;
+  margin-inline: auto;
+  z-index: 4;
+  pointer-events: auto;
+}
+
+.brand-over-box .brand-shot {
+  padding: 0;
+}
+
+.brand-scene {
+  background: #0a0a0a;
+  padding: 24px;
+}
+
+.brand-shot {
+  text-align: center;
+  color: #fff;
+}
+
+.brand-shot h2 {
+  margin: 0 0 8px;
+  font-size: 1.75rem;
+  font-weight: 900;
+}
+
+.brand-shot p {
+  margin: 0 0 20px;
+  opacity: 0.7;
+  font-weight: 600;
+}
+
+.whatsapp-cta {
+  display: inline-flex;
+  padding: 12px 24px;
+  border-radius: 10px;
+  background: #ffe566;
+  color: #0a0a0a;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+@media (max-width: 420px) {
+  .reel-app {
+    padding: 0;
+  }
+
+  .reel-frame {
+    width: 100vw;
+    min-height: 100svh;
+    border-radius: 0;
+    aspect-ratio: auto;
+    height: 100svh;
+  }
+}
