@@ -67,6 +67,62 @@ const makeTone = (
   return `data:audio/wav;base64,${window.btoa(binary)}`
 }
 
+const makeRouletteSpin = (duration = 1.2) => {
+  const sampleRate = 22050
+  const samples = Math.floor(sampleRate * duration)
+  const buffer = new ArrayBuffer(44 + samples * 2)
+  const view = new DataView(buffer)
+
+  const writeText = (offset: number, text: string) => {
+    for (let index = 0; index < text.length; index += 1) {
+      view.setUint8(offset + index, text.charCodeAt(index))
+    }
+  }
+
+  writeText(0, 'RIFF')
+  view.setUint32(4, 36 + samples * 2, true)
+  writeText(8, 'WAVE')
+  writeText(12, 'fmt ')
+  view.setUint32(16, 16, true)
+  view.setUint16(20, 1, true)
+  view.setUint16(22, 1, true)
+  view.setUint32(24, sampleRate, true)
+  view.setUint32(28, sampleRate * 2, true)
+  view.setUint16(32, 2, true)
+  view.setUint16(34, 16, true)
+  writeText(36, 'data')
+  view.setUint32(40, samples * 2, true)
+
+  let seed = 0x9e3779b9
+  const rnd = () => {
+    seed = Math.imul(seed ^ (seed >>> 16), 2246822507)
+    seed = Math.imul(seed ^ (seed >>> 13), 3266489909)
+    return ((seed ^ (seed >>> 16)) >>> 0) / 4294967296
+  }
+
+  for (let index = 0; index < samples; index += 1) {
+    const t = index / sampleRate
+    const wheel = Math.sin(2 * Math.PI * 96 * t) * 0.08 + Math.sin(2 * Math.PI * 192 * t) * 0.035
+    const bearing = (rnd() * 2 - 1) * 0.045
+    const tickRate = 30 + 18 * Math.sin(2 * Math.PI * 0.55 * t)
+    const tickPhase = (t * tickRate) % 1
+    const tickEnvelope = Math.max(0, 1 - tickPhase * 32)
+    const tickTone = Math.sin(2 * Math.PI * (1450 + rnd() * 900) * t) * tickEnvelope * 0.65
+    const marble = Math.sin(2 * Math.PI * (420 + 80 * Math.sin(2 * Math.PI * 3.2 * t)) * t) * 0.055
+    const sample = wheel + bearing + tickTone + marble
+
+    view.setInt16(44 + index * 2, Math.max(-32767, Math.min(32767, sample * 23000)), true)
+  }
+
+  let binary = ''
+  const bytes = new Uint8Array(buffer)
+  for (let index = 0; index < bytes.length; index += 1) {
+    binary += String.fromCharCode(bytes[index])
+  }
+
+  return `data:audio/wav;base64,${window.btoa(binary)}`
+}
+
 const makeChord = (frequencies: number[], duration: number, volume = 0.4) => {
   const sampleRate = 22050
   const samples = Math.floor(sampleRate * duration)
@@ -205,7 +261,7 @@ const getSounds = () => {
     sounds = {
       tap: new Howl({ src: [makeTone(720, 0.06, 0.5, 'square')], volume: 0.55 }),
       whoosh: new Howl({ src: [makeTone(180, 0.22, 0.35, 'sawtooth')], volume: 0.45 }),
-      spin: new Howl({ src: [makeTone(340, 0.14, 0.3, 'square')], volume: 0.38, loop: true }),
+      spin: new Howl({ src: [makeRouletteSpin()], volume: 0.48, loop: true }),
       tick: new Howl({ src: [makeTone(920, 0.05, 0.42, 'square')], volume: 0.5 }),
       win: new Howl({ src: [makeChord([523, 659, 784, 988], 0.35, 0.55)], volume: 0.65 }),
       urgent: new Howl({ src: [makeTone(1100, 0.08, 0.45, 'square')], volume: 0.55 }),

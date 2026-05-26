@@ -7,7 +7,7 @@
   }
 }
 
-@keyframes qr-video-shimmer {
+@keyframes offer-video-shimmer {
   0% {
     opacity: 0.12;
     transform: translateX(-18%) skewX(-8deg);
@@ -316,15 +316,6 @@
   color: rgba(220, 228, 238, 0.88);
 }
 
-.box-lid-countdown {
-  font-size: 1.85rem;
-  font-weight: 950;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-  color: #f8fafc;
-  text-shadow: 0 0 18px rgba(180, 200, 220, 0.45);
-}
-
 .box-lid-offer {
   font-size: 0.8rem;
   font-weight: 900;
@@ -334,7 +325,7 @@
 
 /*
  * Outer .qr-image-face = grey injection-moulded bezel (street signage housing).
- * Inner .qr-screen-inner = nearly full-area LCD stack playing the ad “video”.
+ * Inner .qr-screen-inner = nearly full-area LCD stack playing the offer.
  */
 .qr-image-face {
   position: relative;
@@ -427,7 +418,7 @@
     rgba(255, 255, 255, 0.12) 53%,
     transparent 66%
   );
-  animation: qr-video-shimmer 2.8s ease-in-out infinite;
+  animation: offer-video-shimmer 2.8s ease-in-out infinite;
   mix-blend-mode: soft-light;
 }
 
@@ -483,36 +474,42 @@
   font-weight: 950;
 }
 
+.offer-brand-lockup {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  max-width: 92%;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 4px 7px;
+  color: #111111;
+}
+
+.offer-face-logo {
+  width: clamp(28px, 14vw, 42px);
+  height: clamp(20px, 10vw, 30px);
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.offer-brand-lockup > span {
+  color: #111111;
+  font-size: clamp(0.5rem, 2.6vw, 0.62rem);
+  font-weight: 950;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
 .offer-kicker {
   position: relative;
   z-index: 4;
   font-size: clamp(0.44rem, 2.4vw, 0.52rem);
   letter-spacing: 0.16em;
   opacity: 0.93;
-}
-
-.offer-qr-wrap {
-  position: relative;
-  z-index: 4;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3px;
-  border-radius: 3px;
-  background: #fff;
-  line-height: 0;
-  box-shadow:
-    0 1px 4px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.85);
-}
-
-/* Keep QR square inside the face so the panel doesn’t look warped */
-.food-box-stage.is-stopped .offer-qr-wrap svg {
-  display: block;
-  width: clamp(72px, 38%, 88px);
-  height: auto;
-  aspect-ratio: 1;
 }
 
 .qr-image-face-winner {

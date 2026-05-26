@@ -1,35 +1,62 @@
-# LED SpinBox — Reel Ad
+# Arak Holdings Landing Page and LED SpinBox
 
-Mobile-first Vite + React reel advert: grey delivery LED box, spin-to-win, lid opens after rotation, QR claim, fireworks sounds, and brand end card.
+Next.js app for Arak Holdings. The homepage is a one-page rental landing page for vending machines and LED food delivery boxes. The existing Spin to Win reel advert now lives at `/spin-to-win`.
 
-## Run
+## Run Locally
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open the URL Vite prints (usually `http://localhost:5173`).
+Open the URL Next prints, usually `http://localhost:3000`.
 
 ## Build
 
 ```bash
 npm run build
-npm run preview
+npm run start
 ```
 
-## Configure
+## Google Sheets Lead Capture
 
-Campaign data in `src/lib/config.ts`:
+Set this environment variable to a Google Apps Script web app URL:
+
+```bash
+GOOGLE_SHEETS_WEBHOOK_URL="https://script.google.com/macros/s/.../exec"
+```
+
+The landing page inquiry form posts to `/api/leads`, which forwards timestamped lead payloads to that webhook. Spin to Win entries also attempt to post to the same endpoint and still keep the existing browser `localStorage` fallback under `ledbox:entries`.
+
+Lead payloads include a `source` field:
+
+- `landing-page`
+- `spin-to-win`
+
+## Configure Campaign
+
+Campaign data lives in `lib/config.ts`:
 
 - `whatsappNumber`
 - `brandLine`
 - `offers` (headline, detail, code, WhatsApp `href`, colors)
 
-Scene timing in `src/lib/reelTimeline.ts`.
+Business type dropdown options: `lib/entry-form.ts` -> `BUSINESS_TYPE_OPTIONS`.
 
-## Project layout
+Scene timing: `lib/reel-timeline.ts`.
 
-- `src/components/reel/` — 3D food box, reel scenes, styles
-- `src/lib/` — config, sounds (Howler), timeline
-- `src/App.tsx` — mounts `ReelAdvert`
+## Stored Spin Entries
+
+To inspect local fallback entries in DevTools:
+
+```js
+JSON.parse(localStorage.getItem('ledbox:entries') ?? '[]')
+```
+
+## Project Layout
+
+- `app/` - Next.js App Router pages, API routes, and layout
+- `components/reel/` - 3D food box, reel scenes, and entry form UI
+- `components/landing-inquiry-form.tsx` - landing page lead form
+- `lib/` - campaign config, lead capture, entry form helper, sounds, and timeline
+- `public/` - static campaign and landing page assets

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="560" viewBox="0 0 700 560" role="img" aria-labelledby="title desc">
+  <title id="title">Arak LED food delivery box rental visual</title>
+  <desc id="desc">A matte black food delivery box with LED panels and Arak accent colors.</desc>
+  <rect width="700" height="560" fill="#f5f5f7"/>
+  <ellipse cx="352" cy="450" rx="210" ry="34" fill="#000" opacity="0.15"/>
+  <path d="M158 194c0-28 22-50 50-50h286c28 0 50 22 50 50v214H158V194Z" fill="#111113"/>
+  <path d="M184 170h334c18 0 32 14 32 32v34H152v-34c0-18 14-32 32-32Z" fill="#1f1f22"/>
+  <path d="M200 128h302c18 0 32 14 32 32v26H168v-26c0-18 14-32 32-32Z" fill="#2a2a2d"/>
+  <rect x="204" y="214" width="294" height="142" rx="18" fill="#050506" stroke="#3d3d42" stroke-width="3"/>
+  <rect x="224" y="236" width="254" height="98" rx="12" fill="#151519"/>
+  <rect x="242" y="256" width="216" height="14" rx="7" fill="#e31b23"/>
+  <rect x="242" y="286" width="150" height="14" rx="7" fill="#149447"/>
+  <rect x="242" y="316" width="186" height="14" rx="7" fill="#f4c400"/>
+  <path d="M160 236h-34c-18 0-32 14-32 32v106c0 18 14 32 32 32h34V236Z" fill="#19191c"/>
+  <path d="M540 236h34c18 0 32 14 32 32v106c0 18-14 32-32 32h-34V236Z" fill="#19191c"/>
+  <rect x="108" y="270" width="38" height="74" rx="10" fill="#050506" stroke="#36363a" stroke-width="3"/>
+  <rect x="554" y="270" width="38" height="74" rx="10" fill="#050506" stroke="#36363a" stroke-width="3"/>
+  <path d="M216 150c12-46 42-72 92-72h86c50 0 80 26 92 72" fill="none" stroke="#111113" stroke-width="22" stroke-linecap="round"/>
+  <path d="M228 148c12-34 38-52 80-52h86c42 0 68 18 80 52" fill="none" stroke="#3a3a3d" stroke-width="8" stroke-linecap="round"/>
+  <rect x="184" y="388" width="334" height="34" rx="14" fill="#252529"/>
+  <circle cx="220" cy="432" r="22" fill="#151519" stroke="#3f3f44" stroke-width="8"/>
+  <circle cx="482" cy="432" r="22" fill="#151519" stroke="#3f3f44" stroke-width="8"/>
+  <rect x="174" y="186" width="354" height="222" rx="24" fill="url(#box-shine)" opacity="0.42"/>
+  <defs>
+    <linearGradient id="box-shine" x1="186" y1="170" x2="520" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff" stop-opacity="0.34"/>
+      <stop offset="0.34" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.18"/>
+    </linearGradient>
+  </defs>
+</svg>
