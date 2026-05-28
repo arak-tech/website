@@ -7,7 +7,7 @@ const geist = Geist({
   weight: "variable",
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-geist-mono",
+  variable: "--font-geist",
 });
 
 export const metadata: Metadata = {
@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="en" className="h-full antialiased">
       <body
         className={cn(
-          "flex min-h-full flex-col font-mono selection:bg-primary/10 selection:text-primary",
+          "flex min-h-full flex-col font-sans selection:bg-primary/10 selection:text-primary",
           geist.className,
         )}
       >
