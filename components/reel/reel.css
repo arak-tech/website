@@ -44,7 +44,7 @@
 .spinbox-copy p,
 .entry-eyebrow {
   margin: 0;
-  color: #0066cc;
+  color: #171717;
   font-size: 14px;
   font-weight: 600;
   line-height: 1.29;
@@ -162,7 +162,7 @@
   justify-content: center;
   padding: 0 22px;
   border-radius: 9999px;
-  background: #0066cc;
+  background: #171717;
   color: #ffffff;
   font-size: 17px;
   font-weight: 400;
@@ -175,7 +175,7 @@
 }
 
 .spinbox-start-button:hover strong {
-  background: #0071e3;
+  background: #2a2a2a;
   color: #ffffff;
 }
 
@@ -249,8 +249,8 @@
 }
 
 .entry-control:focus {
-  border-color: #0071e3;
-  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.16);
+  border-color: #171717;
+  box-shadow: 0 0 0 3px rgba(23, 23, 23, 0.14);
 }
 
 .entry-error {
@@ -281,8 +281,8 @@
 .claim-offer-btn,
 .whatsapp-cta {
   min-height: 44px;
-  border: 0;
-  background: #0066cc;
+  border: 1px solid #171717;
+  background: #171717;
   color: #ffffff;
   padding: 0 22px;
   font-size: 17px;
@@ -293,7 +293,14 @@
 .entry-submit:hover,
 .claim-offer-btn:hover,
 .whatsapp-cta:hover {
-  background: #0071e3;
+  background: #2a2a2a;
+  border-color: #2a2a2a;
+  color: #ffffff;
+}
+
+.entry-submit:visited,
+.claim-offer-btn:visited,
+.whatsapp-cta:visited {
   color: #ffffff;
 }
 
@@ -395,9 +402,9 @@
   min-width: 204px;
   min-height: 52px;
   padding: 14px 28px;
-  border: 1px solid #0066cc;
+  border: 1px solid #171717;
   border-radius: 9999px;
-  background: #0066cc;
+  background: #171717;
   color: #ffffff;
   font-size: 17px;
   font-weight: 400;
